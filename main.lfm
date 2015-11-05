@@ -1,17 +1,18 @@
 object FillerForm: TFillerForm
-  Left = 981
+  Left = 1019
   Height = 715
-  Top = 103
+  Top = 72
   Width = 799
   Caption = 'FillerForm'
   ClientHeight = 715
   ClientWidth = 799
   LCLVersion = '1.4.4.0'
-  object PaintBox1: TPaintBox
+  object PlayBoard: TPaintBox
     Left = 16
     Height = 529
     Top = 160
     Width = 568
+    OnPaint = PlayBoardPaint
   end
   object NewGame: TButton
     Left = 616

@@ -26,12 +26,13 @@ type
 
   TFillerForm = class(TForm)
     NewGame: TButton;
-    PaintBox1: TPaintBox;
+    PlayBoard: TPaintBox;
     procedure NewGameClick(Sender: TObject);
     function MiniMax(hum:boolean; d:integer; board:TBoard; var best_board: TBoard):integer;
     function Account(board:TBoard):integer;
     procedure MakeStep(hum:boolean; board:TBoard; var new_board:TBoard; var n:byte);
     procedure FillBoard(var board:TBoard; n,pn:byte; x, y:integer);
+    procedure PlayBoardPaint(Sender: TObject);
   private
     { private declarations }
   public
@@ -160,6 +161,17 @@ begin
     y:=y+dy[s];
     FillBoard(board, n, pn, x,y);
   end;
+end;
+
+procedure TFillerForm.PlayBoardPaint(Sender: TObject);
+var
+  C:TCanvas;
+begin
+  C:=PlayBoard.Canvas;
+  //Cx:=Figure.ClientWidth >> 1;
+  //Cy:=Figure.ClientHeight >> 1;
+  //C.Draw(Cx-Sx,by,bmp);  //TCanvas
+  //C.Ellipse(xi-SR,yi-SR,xi+SR,yi+SR);
 end;
 
 end.
