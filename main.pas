@@ -31,7 +31,7 @@ type
     function MiniMax(hum:boolean; d:integer; board:TBoard; var best_board: TBoard):integer;
     function Account(board:TBoard):integer;
     procedure MakeStep(hum:boolean; board:TBoard; var new_board:TBoard; var n:byte);
-    procedure FillBoard(var new_board:TBoard; n:byte; x, y:integer);
+    procedure FillBoard(var board:TBoard; n,pn:byte; x, y:integer);
   private
     { private declarations }
   public
@@ -57,7 +57,7 @@ function TFillerForm.MiniMax(hum:boolean; d:integer; board:TBoard;
 var
   acc,bacc:integer;
   new_board, _board:TBoard;
-  n:integer;
+  n:byte;
 begin
   if d>=MAX_HALF_STEPS then
   begin
@@ -117,12 +117,16 @@ begin
   Account:=cc-hc;
 end;
 
-procedure TFillerForm.MakeStep(hum:boolean; board:TBoard; var new_board:TBoard; var n:integer);
+procedure TFillerForm.MakeStep(hum:boolean; board:TBoard; var new_board:TBoard; var n:byte);
+var
+  hc,cc:byte;
 begin
   new_board.correct:=false;
   if n>MAX_COLOR then EXIT;
   new_board:=board;
-  if (new_board.b[1,BOARD_Y]=n) or (new_board.b[BOARD_X,1]=n) then
+  cc:=new_board.b[1,BOARD_Y];
+  hc:=new_board.b[BOARD_X,1];
+  if (hc=n) or (cc=n) then
   begin
     n:=n+1;
     MakeStep(hum, board, new_board, n);
@@ -130,27 +134,32 @@ begin
   else { n is of a correct colour }
   begin
     if hum then
-    FillBoard(new_board, n, BOARD_X, 1)
+    FillBoard(new_board, n, hc, BOARD_X, 1)
     else
-    FillBoard(new_board, n, 1, BOARD_Y);
+    FillBoard(new_board, n, cc, 1, BOARD_Y);
     n:=n+1;
   end;
 end;
 
 const
-  dx:TD = {0,0,1,-1};
-  dy:TD = {-1,1,0,0};
+  dx:TD = (0,0,1,-1);
+  dy:TD = (-1,1,0,0);
 
-procedure TFillerForm.FillBoard(var z:TBoard; n:byte; x,y:integer);
+procedure TFillerForm.FillBoard(var board:TBoard; n,pn:byte; x,y:integer);
 var
   p:byte;
-  nx,ny:integer;
+  s:integer;
 begin
-  if x<0 or y<0 or x>BOARD_X or y>BOARD_Y then exit;
-  p:=z.b[x,y];
-  z.b[x,y]:=n;
-  for
-
+  if (x<0) or (y<0) or (x>BOARD_X) or (y>BOARD_Y) then exit;
+  p:=board.b[x,y];
+  if p<>pn then exit;
+  board.b[x,y]:=n;
+  for s:=1 to 4 do
+  begin
+    x:=x+dx[s];
+    y:=y+dy[s];
+    FillBoard(board, n, pn, x,y);
+  end;
 end;
 
 end.
