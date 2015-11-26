@@ -1,11 +1,12 @@
 object FillerForm: TFillerForm
-  Left = 1019
-  Height = 715
-  Top = 72
-  Width = 799
+  Left = 1016
+  Height = 706
+  Top = 172
+  Width = 596
   Caption = 'FillerForm'
-  ClientHeight = 715
-  ClientWidth = 799
+  ClientHeight = 706
+  ClientWidth = 596
+  OnCreate = FormCreate
   LCLVersion = '1.4.4.0'
   object PlayBoard: TPaintBox
     Left = 16
@@ -15,12 +16,58 @@ object FillerForm: TFillerForm
     OnPaint = PlayBoardPaint
   end
   object NewGame: TButton
-    Left = 616
+    Left = 16
     Height = 25
-    Top = 272
-    Width = 75
+    Top = 40
+    Width = 216
     Caption = 'New Game'
     OnClick = NewGameClick
     TabOrder = 0
+  end
+  object Choice: TPaintBox
+    Left = 16
+    Height = 62
+    Top = 82
+    Width = 568
+    OnMouseUp = ChoiceMouseUp
+    OnPaint = ChoicePaint
+  end
+  object human_col: TPaintBox
+    Left = 344
+    Height = 35
+    Top = 39
+    Width = 66
+    OnPaint = human_colPaint
+  end
+  object computer_col: TPaintBox
+    Left = 520
+    Height = 35
+    Top = 39
+    Width = 64
+    OnPaint = human_colPaint
+  end
+  object human: TLabel
+    Left = 280
+    Height = 18
+    Top = 47
+    Width = 57
+    Caption = 'Human:'
+    Font.Height = -17
+    Font.Name = 'Helvetica'
+    ParentColor = False
+    ParentFont = False
+    OnClick = humanClick
+  end
+  object computer: TLabel
+    Left = 440
+    Height = 18
+    Top = 47
+    Width = 76
+    Caption = 'Computer:'
+    Font.Height = -17
+    Font.Name = 'Helvetica'
+    ParentColor = False
+    ParentFont = False
+    OnClick = humanClick
   end
 end
